@@ -25,9 +25,10 @@ class StatefulServiceTest {
         int price = statefulService1.getPrice();
         System.out.println("price = " + price);
 
-//        Assertions.assertThat(statefulService1.getPrice()).isEqualTo(20000); //잘못된 방식
-        Assertions.assertThat(priceA).isEqualTo(priceB);
+        Assertions.assertThat(statefulService1.getPrice()).isEqualTo(20000); //잘못된 방식
+//        Assertions.assertThat(priceA).isEqualTo(priceB);
     }
+
     static class TestConfig {
         @Bean
         public StatefulService statefulService() {
