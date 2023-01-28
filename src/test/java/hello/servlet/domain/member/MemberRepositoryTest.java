@@ -39,7 +39,7 @@ class MemberRepositoryTest {
         memberRepository.save(member1);
         memberRepository.save(member2);
 
-        //when
+        //when1
         List<Member> result = memberRepository.findAll();
 
         //then
