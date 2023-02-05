@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LogTestController {
 
     /**log 선언*/
-    private final Logger log = LoggerFactory.getLogger(getClass());
+//    private final Logger log = LoggerFactory.getLogger(getClass());
 
 
 /**
