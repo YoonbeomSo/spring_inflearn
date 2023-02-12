@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
 
 @Slf4j
 @Controller
-public class ReqeustBodyStringController {
+public class RequestBodyStringController {
 
     @PostMapping("/request-body-string-v1")
     public void requestBodyString(HttpServletRequest request, HttpServletResponse response) throws IOException {
