@@ -1,7 +1,9 @@
 package hello.springmvc.basic.request;
 
+import hello.springmvc.basic.HelloData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -49,7 +51,7 @@ public class RequestParamController {
     @ResponseBody
     @RequestMapping("/request-param-v4")
     public String requestParmV4(
-            String username,
+            String username,//@RequestParam 생략 가능
             int age) {
 
         log.info("username={}, age={}", username, age);
@@ -82,6 +84,32 @@ public class RequestParamController {
     public String requestParmMap(@RequestParam Map<String, Object> paramMap){
 
         log.info("username={}, age={}", paramMap.get("username"), paramMap.get("age"));
+        return "ok";
+    }
+
+
+    /**
+     * @ModelAttribute 사용
+     * 참고: model.addAttribute(helloData) 코드도 함께 자동 적용됨
+     *
+     */
+    @ResponseBody
+    @RequestMapping("/model-attribute-v1")
+    public String modelAttributeV1(
+            @ModelAttribute HelloData helloData
+    ) {
+        log.info("username={}, age={}", helloData.getUsername(), helloData.getAge());
+        log.info("helloData ={}", helloData); //lombok @Data로 인한 toString 가능
+        return "ok";
+    }
+    @ResponseBody
+    @RequestMapping("/model-attribute-v2")
+    public String modelAttributeV2(
+//            @ModelAttribute HelloData helloData
+            HelloData helloData //@ModelAttribute 생략 가능
+    ) {
+        log.info("username={}, age={}", helloData.getUsername(), helloData.getAge());
+        log.info("helloData ={}", helloData); //lombok @Data로 인한 toString
         return "ok";
     }
 
