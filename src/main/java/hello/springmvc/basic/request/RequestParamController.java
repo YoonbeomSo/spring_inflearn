@@ -29,7 +29,7 @@ public class RequestParamController {
 
     @ResponseBody
     @RequestMapping("/request-param-v2")
-    public String requestParmV2(
+    public String requestParamV2(
             @RequestParam("username") String memberName,
             @RequestParam("age") int memberAge) {
 
@@ -40,7 +40,7 @@ public class RequestParamController {
 
     @ResponseBody
     @RequestMapping("/request-param-v3")
-    public String requestParmV3(
+    public String requestParamV3(
             @RequestParam String username,
             @RequestParam int age) {
 
@@ -50,7 +50,7 @@ public class RequestParamController {
 
     @ResponseBody
     @RequestMapping("/request-param-v4")
-    public String requestParmV4(
+    public String requestParamV4(
             String username,//@RequestParam 생략 가능
             int age) {
 
@@ -60,7 +60,7 @@ public class RequestParamController {
 
     @ResponseBody
     @RequestMapping("/request-param-required")
-    public String requestParmRequired(
+    public String requestParamRequired(
             @RequestParam(required = true) String username,
             @RequestParam(required = false) Integer age) {
 
