@@ -61,7 +61,6 @@ class ItemRepositoryTest {
         //when
         Item updateParam = new Item("item2", 200000, 30);
         itemRepository.update(itemId, updateParam);
-
         //then
         Item findItem = itemRepository.findById(itemId);
 
