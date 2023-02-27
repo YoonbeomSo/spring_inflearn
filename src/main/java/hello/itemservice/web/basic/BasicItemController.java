@@ -45,6 +45,20 @@ public class BasicItemController {
         return "basic/item";
     }
 
+    @GetMapping("/add")
+    public String addForm(){
+        return "basic/addForm";
+    }
+
+    @PostMapping("/add")
+    public String save() {
+        System.out.println("??????? ");
+        return "basic/addForm";
+    }
+
+
+
+
 
 }
 
