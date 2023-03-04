@@ -14,6 +14,10 @@
     <div class="py-5 text-center">
         <h2>상품 등록 폼</h2></div>
     <h4 class="mb-3">상품 입력</h4>
+    <!--
+    get 요청에서 불러온 화면단에서 같은 url 로 post 요청을 보낼때는 th:action 만 적고 url 경로를 생략할 수 있다.
+    타임리프에서 모든 경로는 @{} 안에 적는다.
+    -->
     <form action="item.html" th:action="@{/basic/items/add}" method="post">
         <div>
             <label for="itemName">상품명</label>
