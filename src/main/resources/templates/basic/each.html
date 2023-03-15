@@ -26,7 +26,7 @@
     <th>age</th>
     <th>etc</th>
   </tr>
-  <tr th:each="user, userStat : ${users}">
+  <tr th:each="user, userStat : ${users}">,<!-- 생략가능 : 파라미터명 + Stat -->
     <td th:text="${userStat.count}">username</td>
     <td th:text="${user.username}">username</td>
     <td th:text="${user.age}">0</td>
