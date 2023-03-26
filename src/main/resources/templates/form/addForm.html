@@ -39,7 +39,7 @@
         <div>
             <div class="form-check">
                 <input type="checkbox" id="open" th:field="*{open}" class="form-check-input">
-<!--                <input type="hidden" name="_open" value="on"/> &lt;!&ndash;히든필드 추가&ndash;&gt;-->
+                <!--                <input type="hidden" name="_open" value="on"/> &lt;!&ndash;히든필드 추가&ndash;&gt;-->
                 <label for="open" class="form-check-label">판매 오픈</label>
             </div>
         </div>
@@ -58,7 +58,7 @@
         <div>
             <div>상품 종류</div>
             <div th:each="type : ${itemTypes}" class="form-check form-check-inline">
-<!--            <div th:each="type : ${T(hello.itemservice.domain.item.ItemType).values()}" class="form-check form-check-inline">-->
+                <!--            <div th:each="type : ${T(hello.itemservice.domain.item.ItemType).values()}" class="form-check form-check-inline">-->
                 <input type="radio" th:field="${item.itemType}" th:value="${type.name()}" class="form-check-input">
                 <label th:for="${#ids.prev('itemType')}" th:text="${type.description}" class="form-check-label">
                     BOOK
@@ -67,6 +67,20 @@
         </div>
 
 
+        <!-- SELECT -->
+        <div>
+            <div>배송 방식</div>
+            <select th:field="${item.deliveryCode}" class="form-select">
+                <option value="">==배송 방식 선택==</option>
+                <option th:each="deliveryCode : ${deliveryCodes}"
+                        th:value="${deliveryCode.code}"
+                        th:text="${deliveryCode.displayName}">
+                    FAST
+                </option>
+            </select>
+        </div>
+
+        <hr class="my-4">
 
         <div class="row">
             <div class="col">
