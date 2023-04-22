@@ -180,8 +180,7 @@ public class ValidationItemControllerV2 {
         //검증 로직
         if (!StringUtils.hasText(item.getItemName())) {
             bindingResult.rejectValue("itemName", "required");
-
-            String[] requiredItems = {"required.item.itemName", "required"};
+            String[] required = {"required.item.itemName", "required"};
 
         }
         if (item.getPrice() == null || item.getPrice() < 1000 || item.getPrice() > 1000000) {
@@ -205,6 +204,13 @@ public class ValidationItemControllerV2 {
             log.info("{}", bindingResult);
             return "validation/v2/addForm";
         }
+
+        //bindingResult
+//        required.item.itemName
+//        required.itemName
+//        required.java.lang.String
+//        required
+
 
         //성공 로직
         Item savedItem = itemRepository.save(item);
