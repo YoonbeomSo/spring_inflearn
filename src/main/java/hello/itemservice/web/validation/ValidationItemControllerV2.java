@@ -180,9 +180,21 @@ public class ValidationItemControllerV2 {
         //검증 로직
         if (!StringUtils.hasText(item.getItemName())) {
             bindingResult.rejectValue("itemName", "required");
-            String[] required = {"required.item.itemName", "required"};
-
+//            String[] required = {"required.item.itemName", "required"};
         }
+        /**
+         *   BindingResult 사용시
+         *   rejectValue(), reject()는 내부에서 MessageCodesResolver 를 사용한다.
+         *   MessageCodesResolver 는 세분화 된 Level로 오류 코드를 자동 생성한다.
+         *
+         *   ex) bindingResult.rejectValue("itemName", "required")
+         *   에서 다음 4가지 오류 코드를 자동 생성
+         *        - required.item.itemName
+         *        - required.itemName
+         *        - required.java.lang.String
+         *        - required
+         */
+
         if (item.getPrice() == null || item.getPrice() < 1000 || item.getPrice() > 1000000) {
             bindingResult.rejectValue("price", "range", new Object[]{1000,1000000}, null);
         }
@@ -204,13 +216,6 @@ public class ValidationItemControllerV2 {
             log.info("{}", bindingResult);
             return "validation/v2/addForm";
         }
-
-        //bindingResult
-//        required.item.itemName
-//        required.itemName
-//        required.java.lang.String
-//        required
-
 
         //성공 로직
         Item savedItem = itemRepository.save(item);
