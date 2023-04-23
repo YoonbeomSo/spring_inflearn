@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -178,10 +179,6 @@ public class ValidationItemControllerV2 {
         log.info("target={}",bindingResult.getTarget());
 
         //검증 로직
-        if (!StringUtils.hasText(item.getItemName())) {
-            bindingResult.rejectValue("itemName", "required");
-//            String[] required = {"required.item.itemName", "required"};
-        }
         /**
          *   BindingResult 사용시
          *   rejectValue(), reject()는 내부에서 MessageCodesResolver 를 사용한다.
@@ -194,6 +191,12 @@ public class ValidationItemControllerV2 {
          *        - required.java.lang.String
          *        - required
          */
+//        if (!StringUtils.hasText(item.getItemName())) {
+//            bindingResult.rejectValue("itemName", "required");
+//        }
+        //ValidationUtils 사용하기
+        //bindingResult.rejectValue("itemName", "required"); 와 같은역할을 한다.
+        ValidationUtils.rejectIfEmpty(bindingResult, "itemName", "required");
 
         if (item.getPrice() == null || item.getPrice() < 1000 || item.getPrice() > 1000000) {
             bindingResult.rejectValue("price", "range", new Object[]{1000,1000000}, null);
@@ -206,7 +209,7 @@ public class ValidationItemControllerV2 {
         if (item.getPrice() != null && item.getQuantity() != null) {
             int resultPrice = item.getPrice() * item.getQuantity();
             if (resultPrice < 10000) {
-                bindingResult.addError(new ObjectError("item", new String[]{"totalPriceMin"}, new Object[]{10000,resultPrice}, null));
+//                bindingResult.addError(new ObjectError("item", new String[]{"totalPriceMin"}, new Object[]{10000,resultPrice}, null));
                 bindingResult.reject("totalPriceMin", new Object[]{10000, resultPrice}, null);
             }
         }
