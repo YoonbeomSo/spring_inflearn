@@ -178,6 +178,14 @@ public class ValidationItemControllerV2 {
         log.info("objectName={}",bindingResult.getObjectName());
         log.info("target={}",bindingResult.getTarget());
 
+
+        //바인딩 시점에서 파악해서 에러를 리턴하기 위해 사용한다.
+        if (bindingResult.hasErrors()) {
+            log.info("{}", bindingResult);
+            return "validation/v2/addForm";
+        }
+
+
         //검증 로직
         /**
          *   BindingResult 사용시
