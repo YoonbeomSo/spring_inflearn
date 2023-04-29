@@ -2,12 +2,15 @@ package hello.itemservice.web.validation;
 
 import hello.itemservice.domain.item.Item;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScans;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
+
 import org.springframework.validation.Validator;
 
-@ComponentScan
+
+@Service
 public class ItemValidator implements Validator {
 
     @Override
