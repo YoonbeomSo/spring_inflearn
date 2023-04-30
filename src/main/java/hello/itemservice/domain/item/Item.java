@@ -2,12 +2,15 @@ package hello.itemservice.domain.item;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.ScriptAssert;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
+//@ScriptAssert(lang = "javascript", script = "_this.price * _this.quantity >= 10000")//Object Error 처리방법
+//but, jdk14 이후 버전부터는 javascript가 지원되지 않는 GraalVM 을 사용 ->@ScriptAssert 는 현재 사용할 수 없는 기능이다.
 public class Item {
 
     private Long id;

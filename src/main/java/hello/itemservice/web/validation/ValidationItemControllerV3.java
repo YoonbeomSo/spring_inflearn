@@ -48,7 +48,16 @@ public class ValidationItemControllerV3 {
 
     //V6 : @Validated 로 검증기 사용하기
     @PostMapping("/add")
-    public String addItemV6(@Validated @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+    public String addItem(@Validated @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+
+        //특정 필드가 아닌 복합 룰 검증 : Object Errors
+        if (item.getPrice() != null && item.getQuantity() != null) {
+            int resultPrice = item.getPrice() * (item.getQuantity());
+            if (resultPrice < 10000) {
+                bindingResult.reject("totalPriceMin", new Object[]{10000,resultPrice}, null);
+            }
+        }
+
 
         //검증에 실패하면 다시 입력 폼으로
         if (bindingResult.hasErrors()) {
