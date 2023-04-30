@@ -88,7 +88,7 @@ public class ValidationItemControllerV2 {
         //검증에 실패하면 다시 입력 폼으로
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
-//            model.addAttribute("errors", errors); //bindingResult view로 자동으로 넘어
+//            model.addAttribute("errors", errors); //bindingResult view로 자동으로 넘어간다.
             return "validation/v2/addForm";
         }
 
