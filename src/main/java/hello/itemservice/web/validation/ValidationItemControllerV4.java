@@ -4,6 +4,8 @@ import hello.itemservice.domain.item.Item;
 import hello.itemservice.domain.item.ItemRepository;
 import hello.itemservice.domain.item.SaveCheck;
 import hello.itemservice.domain.item.UpdateCheck;
+import hello.itemservice.web.validation.form.ItemSaveForm;
+import hello.itemservice.web.validation.form.ItemUpdateForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -43,32 +45,11 @@ public class ValidationItemControllerV4 {
         return "validation/v4/addForm";
     }
 
-//    @PostMapping("/add")
-    public String addItemV1(@Validated @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
-
-        //특정 필드가 아닌 복합 룰 검증 : Object Errors
-        totalPriceMinValidator(item, bindingResult);
-
-
-        //검증에 실패하면 다시 입력 폼으로
-        if (bindingResult.hasErrors()) {
-            log.info("bindingResult = {}", bindingResult);
-            return "validation/v4/addForm";
-        }
-
-        //성공 로직
-        Item savedItem = itemRepository.save(item);
-        redirectAttributes.addAttribute("itemId", savedItem.getId());
-        redirectAttributes.addAttribute("status", true);
-        return "redirect:/validation/v4/items/{itemId}";
-    }
-
     @PostMapping("/add")
-    public String addItemV2(@Validated(value = SaveCheck.class) @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String addItem(@Validated @ModelAttribute("item") ItemSaveForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 
         //특정 필드가 아닌 복합 룰 검증 : Object Errors
-        totalPriceMinValidator(item, bindingResult);
-
+        totalPriceMinValidator(form, bindingResult);
 
         //검증에 실패하면 다시 입력 폼으로
         if (bindingResult.hasErrors()) {
@@ -77,6 +58,12 @@ public class ValidationItemControllerV4 {
         }
 
         //성공 로직
+
+        Item item = new Item();
+        item.setItemName(form.getItemName());
+        item.setPrice(form.getPrice());
+        item.setQuantity(form.getQuantity());
+
         Item savedItem = itemRepository.save(item);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
         redirectAttributes.addAttribute("status", true);
@@ -92,45 +79,49 @@ public class ValidationItemControllerV4 {
     }
 
 
-//    @PostMapping("/{itemId}/edit")
-    public String editV1(@PathVariable Long itemId, @Validated @ModelAttribute Item item, BindingResult bindingResult) {
-
-        //특정 필드가 아닌 복합 룰 검증 : Object Errors
-        totalPriceMinValidator(item, bindingResult);
-
-        if (bindingResult.hasErrors()) {
-            log.info("errors={}", bindingResult);
-            return "validation/v4/editForm";
-        }
-
-        //성공로직
-        itemRepository.update(itemId, item);
-        return "redirect:/validation/v4/items/{itemId}";
-    }
-
     @PostMapping("/{itemId}/edit")
-    public String editV2(@PathVariable Long itemId, @Validated(value = UpdateCheck.class) @ModelAttribute Item item, BindingResult bindingResult) {
+    public String edit(@PathVariable Long itemId, @Validated @ModelAttribute("item")ItemUpdateForm form, BindingResult bindingResult) {
 
         //특정 필드가 아닌 복합 룰 검증 : Object Errors
-        totalPriceMinValidator(item, bindingResult);
+        totalPriceMinValidator(form, bindingResult);
 
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
             return "validation/v4/editForm";
         }
 
+        Item itemParam = new Item();
+        itemParam.setId(form.getId());
+        itemParam.setItemName(form.getItemName());
+        itemParam.setPrice(form.getPrice());
+        itemParam.setQuantity(form.getQuantity());
+
         //성공로직
-        itemRepository.update(itemId, item);
+        itemRepository.update(itemId, itemParam);
         return "redirect:/validation/v4/items/{itemId}";
     }
 
 
     /**
-     *  @Method  : 최소 주문 가격을 검증하는 메소드
+     *  @Method  : 최소 주문 가격을 검증하는 메소드 - 저장용
      *  @since   : 2023/04/30
      *  @auther  : SYB
      */
-    private static void totalPriceMinValidator(Item item, BindingResult bindingResult) {
+    private static void totalPriceMinValidator(ItemSaveForm item, BindingResult bindingResult) {
+        if (item.getPrice() != null && item.getQuantity() != null) {
+            int resultPrice = item.getPrice() * (item.getQuantity());
+            if (resultPrice < 10000) {
+                bindingResult.reject("totalPriceMin", new Object[]{10000,resultPrice}, null);
+            }
+        }
+    }
+
+    /**
+     *  @Method  : 최소 주문 가격을 검증하는 메소드 - 수정용
+     *  @since   : 2023/04/30
+     *  @auther  : SYB
+     */
+    private static void totalPriceMinValidator(ItemUpdateForm item, BindingResult bindingResult) {
         if (item.getPrice() != null && item.getQuantity() != null) {
             int resultPrice = item.getPrice() * (item.getQuantity());
             if (resultPrice < 10000) {
