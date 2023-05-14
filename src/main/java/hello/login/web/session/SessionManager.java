@@ -40,7 +40,7 @@ public class SessionManager {
      */
     public Object getSession(HttpServletRequest request) {
 
-        //before refactoring
+        /**Before Refactoring*/
 //        Cookie[] cookies = request.getCookies();
 //        if(cookies == null) return null;
 //        for (Cookie cookie : cookies) {
@@ -49,11 +49,21 @@ public class SessionManager {
 //            }
 //        }
 //        return null;
-        //after refactoring
+
+        /**After Refactoring*/
         Cookie sessionCookie = findCookie(request, SESSION_COOKIE_NAME);
         if(sessionCookie == null) return null;
-        return sessionStore.get(sessionStore.get(sessionCookie.getValue()));
+        return sessionStore.get(sessionCookie.getValue());
     }
+
+    /**
+     * 세션 만료
+     */
+    public void expire(HttpServletRequest request) {
+        Cookie sessionCookie = findCookie(request, SESSION_COOKIE_NAME);
+        if(sessionCookie != null) sessionStore.remove(sessionCookie.getValue());
+    }
+
 
     public Cookie findCookie(HttpServletRequest request, String cookieName) {
         if(request.getCookies() == null) return null;
