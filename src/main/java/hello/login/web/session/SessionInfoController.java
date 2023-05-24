@@ -21,6 +21,9 @@ public class SessionInfoController {
         session.getAttributeNames().asIterator()
                 .forEachRemaining(name -> log.info("session name={}, value={}", name, session.getAttribute(name)));
 
+        //특정 세션 단위로 시간 설정 (default = 30분)
+//        session.setMaxInactiveInterval(1800);
+
         log.info("sessionId={}", session.getId());
         log.info("getMaxInactiveInterval={}", session.getMaxInactiveInterval());//세션의 유효 시간, 예)1800(초)
         log.info("creationTime={}", new Date(session.getCreationTime())); //세션 생성일시
