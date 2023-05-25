@@ -25,6 +25,7 @@ public class ItemController {
 
     @GetMapping
     public String items(Model model) {
+        //로그인 여부 체크 반복해야하는 문제점 -> 서블릿필터 또는 인터셉터 사용
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
         return "items/items";
