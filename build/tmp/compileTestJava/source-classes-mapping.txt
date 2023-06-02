@@ -2,6 +2,8 @@ hello/login/ItemServiceApplicationTests.java
  hello.login.ItemServiceApplicationTests
 hello/login/validation/BeanValidationTest.java
  hello.login.validation.BeanValidationTest
+hello/login/web/session/SessionManagerTest.java
+ hello.login.web.session.SessionManagerTest
 hello/login/message/MessageSourceTest.java
  hello.login.message.MessageSourceTest
 hello/login/validation/MessageCodesResolverTest.java

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="hello.login.validation.BeanValidationTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-06-02T08:49:35" hostname="YoonbeomSo-MacBookPro13.local" time="0.031">
+  <properties/>
+  <testcase name="beanValidation()" classname="hello.login.validation.BeanValidationTest" time="0.031"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
