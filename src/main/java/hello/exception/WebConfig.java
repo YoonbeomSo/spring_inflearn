@@ -16,14 +16,17 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        //Filter 에서와 같이 DispatcherType 을 통한 에러 페이지를 제외할 수 없다 -> "/error-page/**" 를 제외해주는 방법으로 대신할 수 있다.
         registry.addInterceptor(new LogInterceptor())
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/css/**", "*.ico", "/error", "/error-page/**");
-        //Filter 에서와 같이 DispatcherType 을 통한 에러 페이지를 대신하기 위해 "/error-page/**" 를 추가해준다.
+                .excludePathPatterns(
+                        "/css/**", "*.ico",
+                        "/error", "/error-page/**" //오류 페이지 경로
+                        );
     }
 
-    @Bean
+//    @Bean
     public FilterRegistrationBean logFilter() {
         FilterRegistrationBean<Filter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
         filterFilterRegistrationBean.setFilter(new LogFilter());
