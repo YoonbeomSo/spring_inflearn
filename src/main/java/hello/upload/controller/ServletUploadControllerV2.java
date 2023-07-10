@@ -20,7 +20,7 @@ import java.util.Collection;
 
 @Slf4j
 @Controller
-@RequestMapping("servlet/v2")
+@RequestMapping("/servlet/v2")
 public class ServletUploadControllerV2 {
 
     @Value("${file.dir}")
