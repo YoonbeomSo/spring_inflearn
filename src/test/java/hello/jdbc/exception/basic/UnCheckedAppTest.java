@@ -1,5 +1,6 @@
 package hello.jdbc.exception.basic;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import java.sql.SQLException;
 
@@ -9,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 /**
  * CheckException -> UnCheckedException
  */
+@Slf4j
 public class UnCheckedAppTest {
 
     @Test
@@ -17,6 +19,17 @@ public class UnCheckedAppTest {
         assertThatThrownBy(() -> controller.request()).isInstanceOf(RuntimeException.class);
     }
 
+    @Test
+    void printEx() {
+        Controller controller = new Controller();
+        try {
+            controller.request();
+        } catch (Exception e) {
+            //e.printStackTrace() 를 사용하게 되면 System.out 에 출력된다. > 실무에서는 항상 로그 사용해야 한다.
+//            e.printStackTrace();
+            log.info("ex", e);
+        }
+    }
     static class Controller {
         Service service = new Service();
 
@@ -46,12 +59,13 @@ public class UnCheckedAppTest {
             try {
                 runSQL();
             } catch (SQLException e) {
+                //중요 : 기존 예외를 포함해주어야 예외 출력시 stack trace 에서 기존 예외도 함께 확인할 수 있다.
                 throw new RuntimeSQLException(e);
             }
         }
 
         public void runSQL() throws SQLException {
-            throw new SQLException();
+            throw new SQLException("ex");
         }
 
     }
