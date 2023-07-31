@@ -1,8 +1,7 @@
 package hello.jdbc.service;
 
 import hello.jdbc.domain.Member;
-import hello.jdbc.repository.MemberRepository;
-import hello.jdbc.repository.MemberRepositoryV4_1;
+import hello.jdbc.repository.MemberRepositoryV3;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,46 +19,44 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
- * 예외 누수 문제 해결
- * SQLException 제거
- *
- * MemberRepository 인터페이스 의존
+ * 트랜잭션 - DataSource, TransactionManager 자동 생성
  */
 @Slf4j
 @SpringBootTest
-class MemberServiceV4Test {
+class MemberServiceV3_4Test {
 
     private static final String MEMBER_A = "memberA";
     private static final String MEMBER_B = "memberB";
     private static final String MEMBER_EX = "ex";
 
     @Autowired
-    private MemberRepository memberRepository;
+    private MemberRepositoryV3 memberRepository;
     @Autowired
-    private MemberService memberService;
+    private MemberServiceV3_3 memberService;
 
     @TestConfiguration
     static class TestConfig {
 
         private final DataSource dataSource;
+
         public TestConfig(DataSource dataSource) {
             this.dataSource = dataSource;
         }
 
         @Bean
-        MemberRepository memberRepository() {
-            return new MemberRepositoryV4_1(dataSource);
+        MemberRepositoryV3 memberRepositoryV3() {
+            return new MemberRepositoryV3(dataSource);
         }
 
         @Bean
-        MemberService memberServiceV4() {
-            return new MemberServiceV4(memberRepository());
+        MemberServiceV3_3 memberServiceV3_3() {
+            return new MemberServiceV3_3(memberRepositoryV3());
         }
 
     }
 
     @AfterEach
-    void after() {
+    void after() throws SQLException {
         memberRepository.delete(MEMBER_A);
         memberRepository.delete(MEMBER_B);
         memberRepository.delete(MEMBER_EX);
@@ -70,12 +67,12 @@ class MemberServiceV4Test {
         log.info("memberService class={}", memberService.getClass()); //transaction proxy
         log.info("memberRepository class={}", memberRepository.getClass());
         assertThat(AopUtils.isAopProxy(memberService)).isTrue();
-        assertThat(AopUtils.isAopProxy(memberRepository)).isTrue();
+        assertThat(AopUtils.isAopProxy(memberRepository)).isFalse();
     }
 
     @Test
     @DisplayName("정상이체")
-    void accountTransfer() {
+    void accountTransfer() throws SQLException {
         //given
         Member memberA = new Member(MEMBER_A, 10000);
         Member memberB = new Member(MEMBER_B, 10000);
@@ -96,7 +93,7 @@ class MemberServiceV4Test {
 
     @Test
     @DisplayName("이체중 예외 발생")
-    void accountTransferEx() {
+    void accountTransferEx() throws SQLException {
         //given
         Member memberA = new Member(MEMBER_A, 10000);
         Member memberEx = new Member(MEMBER_EX, 10000);
