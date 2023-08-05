@@ -16,9 +16,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class ItemRepositoryTest {
 
+    /**
+     * test 에 interface 를 사용해야
+     * 이후 구현체 변경에 유리하다.
+     */
     @Autowired
     ItemRepository itemRepository;
 
+    /**
+     * memory Repository 사용 시
+     * transaction 상용이 불가능하기 때문에
+     * test 이후 rollback 역할 수행
+     */
     @AfterEach
     void afterEach() {
         //MemoryItemRepository 의 경우 제한적으로 사용
