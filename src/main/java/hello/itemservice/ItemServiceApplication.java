@@ -1,7 +1,7 @@
 package hello.itemservice;
 
-import hello.itemservice.config.V2Config;
-import hello.itemservice.repository.ItemRepository;
+import hello.itemservice.config.v2.V2Config;
+import hello.itemservice.repository.v1.ItemRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

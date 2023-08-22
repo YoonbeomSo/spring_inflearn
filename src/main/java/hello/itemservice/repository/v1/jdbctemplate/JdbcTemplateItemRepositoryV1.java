@@ -1,7 +1,7 @@
-package hello.itemservice.repository.jdbctemplate;
+package hello.itemservice.repository.v1.jdbctemplate;
 
 import hello.itemservice.domain.Item;
-import hello.itemservice.repository.ItemRepository;
+import hello.itemservice.repository.v1.ItemRepository;
 import hello.itemservice.repository.ItemSearchCond;
 import hello.itemservice.repository.ItemUpdateDto;
 import lombok.extern.slf4j.Slf4j;

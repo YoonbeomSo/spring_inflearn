@@ -1,4 +1,4 @@
-package hello.itemservice.repository.jpa;
+package hello.itemservice.repository.v1.jpa;
 
 import hello.itemservice.domain.Item;
 import org.springframework.data.jpa.repository.JpaRepository;

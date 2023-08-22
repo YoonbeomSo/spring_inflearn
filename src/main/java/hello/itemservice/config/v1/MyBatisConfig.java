@@ -1,8 +1,8 @@
-package hello.itemservice.config;
+package hello.itemservice.config.v1;
 
-import hello.itemservice.repository.ItemRepository;
-import hello.itemservice.repository.mybatis.ItemMapper;
-import hello.itemservice.repository.mybatis.MyBatisItemRepository;
+import hello.itemservice.repository.v1.ItemRepository;
+import hello.itemservice.repository.v1.mybatis.ItemMapper;
+import hello.itemservice.repository.v1.mybatis.MyBatisItemRepository;
 import hello.itemservice.service.ItemService;
 import hello.itemservice.service.ItemServiceV1;
 import lombok.RequiredArgsConstructor;

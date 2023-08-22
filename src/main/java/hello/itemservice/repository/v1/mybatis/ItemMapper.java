@@ -1,4 +1,4 @@
-package hello.itemservice.repository.mybatis;
+package hello.itemservice.repository.v1.mybatis;
 
 import hello.itemservice.domain.Item;
 import hello.itemservice.repository.ItemSearchCond;

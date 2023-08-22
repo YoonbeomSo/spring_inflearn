@@ -1,7 +1,7 @@
-package hello.itemservice.repository.jdbctemplate;
+package hello.itemservice.repository.v1.jdbctemplate;
 
 import hello.itemservice.domain.Item;
-import hello.itemservice.repository.ItemRepository;
+import hello.itemservice.repository.v1.ItemRepository;
 import hello.itemservice.repository.ItemSearchCond;
 import hello.itemservice.repository.ItemUpdateDto;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,6 @@ import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.util.StringUtils;
@@ -24,27 +23,35 @@ import java.util.Optional;
 
 
 /**
- * SimpleJdbcInsert
+ * NamedParameterJdbcTemplate
+ * SqlParameterSource
+ * - BeanPropertySqlParameterSource
+ * - MapSqlParameterSource
+ * Map
+ *
+ * BeanPropertyRowMapper
+ *
  */
 @Slf4j
-public class JdbcTemplateItemRepositoryV3 implements ItemRepository {
+public class JdbcTemplateItemRepositoryV2 implements ItemRepository {
 
 //    private final JdbcTemplate template;
     private final NamedParameterJdbcTemplate template;
-    private final SimpleJdbcInsert jdbcInsert;
-    public JdbcTemplateItemRepositoryV3(DataSource dataSource) {
+    public JdbcTemplateItemRepositoryV2(DataSource dataSource) {
         this.template = new NamedParameterJdbcTemplate(dataSource);
-        this.jdbcInsert = new SimpleJdbcInsert(dataSource)
-                .withTableName("item")
-                .usingGeneratedKeyColumns("id")
-                .usingColumns("item_name", "price", "quantity"); //생략가능
     }
 
     @Override
     public Item save(Item item) {
+        String sql = "insert into item(item_name, price, quantity) values (:itemName, :price, :quantity)";
+
+        KeyHolder keyHolder = new GeneratedKeyHolder(); //identity 전략에 따른 DB 자동 생성 Id를 조회해온다.
+
         SqlParameterSource param = new BeanPropertySqlParameterSource(item);
-        Number key = jdbcInsert.executeAndReturnKey(param);
-        item.setId(key.longValue());
+        template.update(sql, param, keyHolder);
+
+        long key = keyHolder.getKey().longValue();
+        item.setId(key);
         return item;
     }
 

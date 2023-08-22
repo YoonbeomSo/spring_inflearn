@@ -1,10 +1,10 @@
-package hello.itemservice.repository.jpa;
+package hello.itemservice.repository.v1.jpa;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import hello.itemservice.domain.Item;
-import hello.itemservice.repository.ItemRepository;
+import hello.itemservice.repository.v1.ItemRepository;
 import hello.itemservice.repository.ItemSearchCond;
 import hello.itemservice.repository.ItemUpdateDto;
 import org.springframework.stereotype.Repository;

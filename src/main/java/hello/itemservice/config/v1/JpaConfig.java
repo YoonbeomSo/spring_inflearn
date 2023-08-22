@@ -1,7 +1,7 @@
-package hello.itemservice.config;
+package hello.itemservice.config.v1;
 
-import hello.itemservice.repository.ItemRepository;
-import hello.itemservice.repository.jpa.JpaItemRepository;
+import hello.itemservice.repository.v1.ItemRepository;
+import hello.itemservice.repository.v1.jpa.JpaItemRepository;
 import hello.itemservice.service.ItemService;
 import hello.itemservice.service.ItemServiceV1;
 import org.springframework.context.annotation.Bean;

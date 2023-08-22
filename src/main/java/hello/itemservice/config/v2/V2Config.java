@@ -1,7 +1,7 @@
-package hello.itemservice.config;
+package hello.itemservice.config.v2;
 
-import hello.itemservice.repository.ItemRepository;
-import hello.itemservice.repository.jpa.JpaItemRepositoryV3;
+import hello.itemservice.repository.v1.ItemRepository;
+import hello.itemservice.repository.v1.jpa.JpaItemRepositoryV3;
 import hello.itemservice.repository.v2.ItemQueryRepositoryV2;
 import hello.itemservice.repository.v2.ItemRepositoryV2;
 import hello.itemservice.service.ItemService;

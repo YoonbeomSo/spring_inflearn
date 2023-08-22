@@ -1,21 +1,20 @@
-package hello.itemservice.config;
+package hello.itemservice.config.v1;
 
-import hello.itemservice.repository.ItemRepository;
-import hello.itemservice.repository.jpa.JpaItemRepositoryV3;
+import hello.itemservice.repository.v1.ItemRepository;
+import hello.itemservice.repository.v1.jpa.JpaItemRepositoryV2;
+import hello.itemservice.repository.v1.jpa.SpringDataJpaItemRepository;
 import hello.itemservice.service.ItemService;
 import hello.itemservice.service.ItemServiceV1;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.persistence.EntityManager;
-
 
 @Configuration
 @RequiredArgsConstructor
-public class QuerydslConfig {
+public class SpringDataJpaConfig {
 
-    private final EntityManager em;
+    private final SpringDataJpaItemRepository springDataJpaItemRepository;
 
     @Bean
     public ItemService itemService() {
@@ -24,7 +23,7 @@ public class QuerydslConfig {
 
     @Bean
     public ItemRepository itemRepository() {
-        return new JpaItemRepositoryV3(em);
+        return new JpaItemRepositoryV2(springDataJpaItemRepository);
     }
 
 }
