@@ -14,44 +14,45 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 @SpringBootTest
-public class TxBasicTest {
+public class TxLevelTest {
 
-    @Autowired BasicService basicService;
-
-    @Test
-    void proxyCheck() {
-        log.info("aop class={}", basicService.getClass());
-        assertThat(AopUtils.isAopProxy(basicService)).isTrue();
-    }
+    @Autowired
+    private LevelService service;
 
     @Test
-    void txTest() {
-        basicService.tx();
-        basicService.nonTx();
+    void orderTest() {
+        service.write();
+        service.read();
     }
 
     @TestConfiguration
-    static class TxApplyBasicConfig {
+    static class TxLevelTestConfig {
         @Bean
-        BasicService basicService() {
-            return new BasicService();
+        LevelService levelService() {
+            return new LevelService();
         }
     }
 
     @Slf4j
-    static class BasicService {
+    @Transactional(readOnly = true)
+    static class LevelService {
 
-        @Transactional
-        public void tx() {
-            log.info("call tx");
-            boolean txActive = TransactionSynchronizationManager.isActualTransactionActive();
-            log.info("tx active={}", txActive);
+        @Transactional(readOnly = false)
+        public void write() {
+            log.info("call write");
+            printTxInfo();
         }
 
-        public void nonTx() {
-            log.info("call nonTx");
+        public void read() {
+            log.info("call read");
+            printTxInfo();
+        }
+
+        private void printTxInfo() {
             boolean txActive = TransactionSynchronizationManager.isActualTransactionActive();
             log.info("tx active={}", txActive);
+            boolean readOnly = TransactionSynchronizationManager.isCurrentTransactionReadOnly();
+            log.info("tx readOnly={}", readOnly);
         }
     }
 
