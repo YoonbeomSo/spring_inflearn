@@ -79,7 +79,7 @@ public class BasicTxTest {
         log.info("트랜잭션2 롤백 완료");
     }
 
-₩
+
     @Test
     void inner_commit() {
         log.info("외부 트랜잭션 시작");
