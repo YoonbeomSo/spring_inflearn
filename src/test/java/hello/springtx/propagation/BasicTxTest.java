@@ -99,6 +99,7 @@ public class BasicTxTest {
         txManager.commit(outer);
     }
 
+
     @Test
     void outer_rollback() {
         log.info("외부 트랜잭션 시작");
@@ -112,6 +113,7 @@ public class BasicTxTest {
         log.info("외부 트랜잭션 롤백");
         txManager.rollback(outer);
     }
+
     @Test
     void inner_rollback() {
         log.info("외부 트랜잭션 시작");
