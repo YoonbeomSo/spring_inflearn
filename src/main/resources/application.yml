@@ -6,7 +6,7 @@ spring:
     driver-class-name: org.h2.Driver
   jpa:
     hibernate:
-      ddl-auto: create #application 실행 시점에 entity 정보를 통해 table을 지우고 다시 생성한다. //실무에서는 none으로 설정함.
+      ddl-auto: none #application 실행 시점에 entity 정보를 통해 table을 지우고 다시 생성한다. //실무에서는 none으로 설정함.
     properties:
       hibernate:
 #        show_sql: true #sout으로 찍음
