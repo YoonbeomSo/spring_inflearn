@@ -1,6 +1,7 @@
 package jpabook.jpashop.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ public class Delivery {
     @Column(name = "delivery_id")
     private Long id;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY) //delivery 보다는 order 로 조회할 경우가 많기 때문에 1대1관계에서 order 를 연관 관계 주인으로 두었다
     private Order order;
 

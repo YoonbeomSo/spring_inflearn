@@ -23,7 +23,7 @@ public class Member {
     @Embedded
     private Address address;
 
-//    @JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "member") //order table 에 있는 "member" fild 에 의해 mapping 된 것 이라는 뜻 -> 연관 관계의 주인이 아닌 반대 쪽에 적어 준다.
     private List<Order> orders = new ArrayList<>(); //collection은 필드에서 바로 초기해주는 것이 좋다.
 }
