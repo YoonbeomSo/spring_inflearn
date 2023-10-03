@@ -132,4 +132,18 @@ public class OrderRepository {
         ).getResultList();
     }
 
+    /**
+     * distinct 를 jpa 에서 사용 시 id가 같은 row는 jpa가 중복 제거한다..
+     * @return
+     */
+    public List<Order> findAllWithItem() {
+        return em.createQuery(
+                "select distinct o from Order o" +
+                        " join fetch o.member m" +
+                        " join fetch o.delivery d" +
+                        " join fetch o.orderItems oi" +
+                        " join fetch oi.item i", Order.class)
+                .getResultList();
+
+    }
 }

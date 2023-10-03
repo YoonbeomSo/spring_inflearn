@@ -55,6 +55,21 @@ public class OrderApiController {
                 .collect(Collectors.toList());
     }
 
+
+    /**
+     * N + 1 문제 해결 (used fetch join)
+     * 데이터 뻥튀기 문제 해결(used distinct)
+     * but, paging 불가능
+     */
+    @GetMapping("/api/v3/orders")
+    public List<OrderDto> ordersV3() {
+        List<Order> orders = orderRepository.findAllWithItem();
+        return orders.stream()
+                .map(o -> new OrderDto(o))
+                .collect(Collectors.toList());
+    }
+
+
     @Getter
     static class OrderDto {
 
