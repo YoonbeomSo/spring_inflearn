@@ -28,7 +28,7 @@ public abstract class Item { //상속 관계 매핑
     private List<Category> categories = new ArrayList<>();
 
 
-    //==비즈니스 로직==// --> setter를 지우고 변수를 변경해려면 핵심 비즈니스 로직을 가지고 변경 시켜야한다.
+    //==비즈니스 로직==// --> setter를 지우고 변수를 변경하려면 핵심 비즈니스 로직을 가지고 변경시켜야 한다.
     /*stock 증가*/
     public void addStock(int quantity) {
         this.stockQuantity += quantity;

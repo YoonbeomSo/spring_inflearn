@@ -13,4 +13,4 @@ spring:
         format_sql: true
 logging.level:
   org.hibernate.SQL: debug #log.info로 찍음
-  org.hibernate.type: trace #로깅할때 ?에 해당하는 파라미터 로그 찍어줌
+#  org.hibernate.type: trace #로깅할때 ?에 해당하는 파라미터 로그 찍어줌
