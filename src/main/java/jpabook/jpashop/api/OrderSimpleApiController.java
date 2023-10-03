@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * 지연 로딩과 조회 성능 최적화
+ *
  * xToOne(ManyToOne, OneToOne)
  * Order
  * Order -> Member

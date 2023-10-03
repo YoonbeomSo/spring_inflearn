@@ -16,9 +16,9 @@ public class JpashopApplication {
      *  안좋은 예 : 객체를 직접 리턴하는 방법이기 때문에 사용하면 안됨
      *  proxy 객체 빈으로 등록 -> 지연 로딩 객체 null 값으로 리턴 가능
      */
-//    @Bean
-//    Hibernate5Module hibernate5Module(){
-//        return new Hibernate5Module();
-//    }
+    @Bean
+    Hibernate5Module hibernate5Module(){
+        return new Hibernate5Module();
+    }
 
 }

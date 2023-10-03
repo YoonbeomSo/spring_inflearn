@@ -1,5 +1,6 @@
 package jpabook.jpashop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jpabook.jpashop.domain.item.Item;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED) //값이 없는 객체를 막는 생성자 생성
+@NoArgsConstructor(access = AccessLevel.PROTECTED) //값이 없는 객체를 막는 PROTECTED 생성자 생성
 public class OrderItem {
 
     @Id @GeneratedValue
