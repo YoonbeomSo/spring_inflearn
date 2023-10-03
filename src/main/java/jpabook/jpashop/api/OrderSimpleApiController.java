@@ -27,6 +27,10 @@ public class OrderSimpleApiController {
     private final OrderRepository orderRepository;
 
 
+    /**
+     * Entity 로 리턴
+     * N + 1 문제 발생
+     */
     @GetMapping("/api/v1/simple-orders")
     public List<Order> ordersV1() {
         List<Order> all = orderRepository.findAllByString(new OrderSearch());
@@ -37,9 +41,13 @@ public class OrderSimpleApiController {
         return all;
     }
 
+
+    /**
+     * DTO 로 리턴
+     * N + 1 문제 발생
+     */
     @GetMapping("/api/v2/simple-orders")
     public List<SimpleOrderDto> ordersV2() {
-
         //N + 1 문제 -> 1 + 회원 N + 배송 N
         //조회 결과 주문 2개 -> 1 + 2 + 2 = 5 : 5번의 쿼리 실행
         return orderRepository.findAllByString(new OrderSearch())
@@ -47,6 +55,20 @@ public class OrderSimpleApiController {
                 .map(SimpleOrderDto::new)
                 .collect(Collectors.toList());
     }
+
+
+    /**
+     * N + 1 문제 해결 (used fetch join)
+     */
+    @GetMapping("/api/v3/simple-orders")
+    public List<SimpleOrderDto> ordersV3() {
+        return orderRepository.findAllWithMemberDelivery()
+                .stream()
+                .map(SimpleOrderDto::new)
+                .collect(Collectors.toList());
+    }
+
+
 
     @Data
     static class SimpleOrderDto {
