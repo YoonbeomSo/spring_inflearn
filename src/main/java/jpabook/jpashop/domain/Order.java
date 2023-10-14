@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -26,7 +27,7 @@ public class Order {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @JsonIgnore
+    @BatchSize(size = 1000)
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL) //  CascadeType.ALL : persist를 전파한다 -> order 를 persist 하면 OrderItem 까지 persist 된다.
     private List<OrderItem> orderItems = new ArrayList<>();
 

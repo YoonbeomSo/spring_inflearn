@@ -11,6 +11,7 @@ spring:
       hibernate:
 #        show_sql: true #sout으로 찍음
         format_sql: true
+        default_batch_fetch_size: 100 #in query 로 최적화
 logging.level:
   org.hibernate.SQL: debug #log.info로 찍음
 #  org.hibernate.type: trace #로깅할때 ?에 해당하는 파라미터 로그 찍어줌
