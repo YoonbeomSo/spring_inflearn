@@ -1,0 +1,17 @@
+RequestMappingHandlerAdapter
+
+HttpMessageConverter 가 사용되는 위치는?
+->  모든 비밀은 애노테이션 기반의 컨트롤러,
+    그러니까 @RequestMapping 을 처리하는 핸들러 어댑터인
+    RequestMappingHandlerAdapter (요청 매핑 헨들러 어뎁터)에 있다.
+
+    ArgumentResolver
+    생각해보면, 애노테이션 기반의 컨트롤러는 매우 다양한 파라미터를 사용할 수 있었다.
+    HttpServletRequest , Model 은 물론이고, @RequestParam , @ModelAttribute 같은 애노테이션
+    그리고 @RequestBody , HttpEntity 같은 HTTP 메시지를 처리하는 부분까지 매우 큰 유연함을 보여주었다.
+    이렇게 파라미터를 유연하게 처리할 수 있는 이유가 바로 ArgumentResolver 덕분이다.
+
+    애노테이션 기반 컨트롤러를 처리하는 RequestMappingHandlerAdapter 는
+    바로 이 ArgumentResolver 를 호출해서 컨트롤러(핸들러)가 필요로 하는 다양한 파라미터의 값(객체)을 생성한다.
+    그리고 이렇게 파리미터의 값이 모두 준비되면 컨트롤러를 호출하면서 값을 넘겨준다.
+    스프링은 30개가 넘는 ArgumentResolver 를 기본으로 제공한다.
