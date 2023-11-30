@@ -13,7 +13,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     List<Member> findTop3HelloBy();
 
-//    @Query(name = "Member.findByUsername") //생략 가능
+    //    @Query(name = "Member.findByUsername") //생략 가능
     List<Member> findByUsername(@Param("username") String username); //namedQuery 에서 @Param 필수
+
+    @Query("select m from Member m where m.username = :username and m.age = :age")
+    List<Member> findUser(@Param("username") String username, @Param("age") int age);
 
 }
