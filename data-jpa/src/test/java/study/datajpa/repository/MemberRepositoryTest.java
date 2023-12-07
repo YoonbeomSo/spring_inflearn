@@ -146,4 +146,17 @@ class MemberRepositoryTest {
         assertThat(MemberList.get(0).getUsername()).isEqualTo("AAA");
         assertThat(MemberList.get(1).getUsername()).isEqualTo("BBB");
     }
+
+    @Test
+    public void returnType() {
+        Member m1 = new Member("AAA", 10);
+        Member m2 = new Member("BBB", 20);
+        memberRepository.save(m1);
+        memberRepository.save(m2);
+
+        List<Member> memberList = memberRepository.findListByUsername("AAA");
+        Member member = memberRepository.findMemberByUsername("AAA");
+        Optional<Member> optionalMember = memberRepository.findOptionalByUsername("AAA");
+
+    }
 }
