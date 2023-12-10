@@ -157,6 +157,5 @@ class MemberRepositoryTest {
         List<Member> memberList = memberRepository.findListByUsername("AAA");
         Member member = memberRepository.findMemberByUsername("AAA");
         Optional<Member> optionalMember = memberRepository.findOptionalByUsername("AAA");
-
     }
 }
