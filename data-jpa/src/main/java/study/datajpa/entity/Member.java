@@ -13,6 +13,7 @@ import javax.persistence.*;
         name = "Member.findByUsername", //일반적인 네임드쿼리 네임 관례
         query = "select m from Member m where m.username = :username"
 )
+@NamedEntityGraph(name = "Member.all", attributeNodes = @NamedAttributeNode("team"))
 public class Member {
 
     @Id
