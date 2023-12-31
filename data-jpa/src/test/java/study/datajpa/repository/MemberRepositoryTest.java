@@ -26,8 +26,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Rollback(false)
 class MemberRepositoryTest {
 
-    @Autowired MemberRepository memberRepository;
-    @Autowired TeamRepository teamRepository;
+    @Autowired
+    MemberRepository memberRepository;
+    @Autowired
+    TeamRepository teamRepository;
     @PersistenceContext
     EntityManager em;
 
@@ -94,7 +96,7 @@ class MemberRepositoryTest {
     public void findHelloBy() {
         List<Member> helloBy = memberRepository.findTop3HelloBy();
     }
-    
+
     @Test
     public void testNamedQuery() {
         Member m1 = new Member("AAA", 10);
@@ -244,6 +246,39 @@ class MemberRepositoryTest {
             System.out.println("member.team.class = " + member.getTeam().getClass());
             System.out.println("member.team = " + member.getTeam().getName());
         }
+    }
+
+    /* JPA Hint : 조회용으로 사용할 객체를 조회하는 JPA 메서드를 설정할 수 있다.*/
+    @Test
+    public void queryHint() {
+        //given
+        Member member1 = new Member("member1", 10);
+        memberRepository.save(member1);
+        em.flush();
+        em.clear();
+
+        //when
+        //bad case
+//        Member findMember = memberRepository.findById(member1.getId()).get();
+//        findMember.setUsername("member2");
+        //good cse
+        Member findMember = memberRepository.findReadOnlyByUsername("member1");
+        findMember.setUsername("member2");
+
+        em.flush();
+    }
+
+    /* JPA Lock*/
+    @Test
+    public void queryLock() {
+        //given
+        Member member1 = new Member("member1", 10);
+        memberRepository.save(member1);
+        em.flush();
+        em.clear();
+
+        //when
+        Member result = memberRepository.findLockByUsername("member1");
     }
 
 }
