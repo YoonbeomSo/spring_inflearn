@@ -57,10 +57,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     List<Member> findMemberFetchJoin();
 
     @Override
-    @EntityGraph(attributePaths = {"team"})
+    @EntityGraph(attributePaths = {"team"})     //team 을 fetch join 해온다
     List<Member> findAll();
 
-    @EntityGraph(attributePaths = {"team"})
+    @EntityGraph(attributePaths = {"team"})  //team 을 fetch join 해온다
     @Query("select m from Member m")
     List<Member> findMemberEntityGraph();
 
