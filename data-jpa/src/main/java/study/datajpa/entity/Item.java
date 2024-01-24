@@ -38,8 +38,8 @@ public class Item implements Persistable<String>  {
         return id;
     }
 
-    //GeneratedValue 가 아닌 save 호출시, isNew() 함수에서 merge 가 동작하여 select query 가 발생하느 문제점 해결 방안.
-    //-> Persistable<?> 인터페이스를 상속받아 isNew() 함수를 Override 하여 구현한다.
+    //GeneratedValue 가 아닌 id 생성방법의 entity를 save 호출 시, isNew() 함수에서 merge 가 동작하여 select query 가 발생하는 문제가 발생
+    //해결 방안 -> Persistable<?> 인터페이스를 상속받아 isNew() 함수를 Override 하여 구현한다.
     @Override
     public boolean isNew() {
 //        return false;
